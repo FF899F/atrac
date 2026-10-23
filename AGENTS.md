@@ -29,6 +29,12 @@ Use `rustfmt` defaults (four-space indentation and trailing commas). Follow Rust
 
 Name tests after observable behavior, such as `payload_writer_failures_are_typed`. Add focused unit tests near changed logic and integration tests for public contracts. Encoding changes must preserve the exact byte fingerprints in `architecture_parity`; there is no perceptual-only acceptance path or numeric coverage target. Run the full workspace suite before submitting.
 
+## Cursor Cloud specific instructions
+
+Rustup is on the image, and `rust-toolchain.toml` selects Rust 1.96 with `rustfmt`. Environment install also adds `clippy`, the `wasm32-unknown-unknown` target, and `wasm-pack`, then runs `cargo fetch --locked`. Re-run that fetch on a branch whose lockfile changed.
+
+Nothing needs to stay running. Encode with the CLI commands above. For the browser demo, build `web/pkg` with the `wasm-pack` command in this file and serve it with `python3 -m http.server`. On `127.0.0.1` or `localhost`, `?fixture=/absolute/path.wav` loads a WAV through the normal UI when that path is reachable from the server root. `docker/` packages the optional legacy i386 oracle. Build, test, and encode with the Cargo commands above.
+
 ## Commit & Pull Request Guidelines
 
 History follows Conventional Commit-style subjects: `fix(at3p): ...`, `refactor(cli): ...`, `test: ...`, and `docs: ...`. Use an imperative, concise subject with the narrowest useful scope. Pull requests should explain the behavior and architecture impact, list validation commands, and link relevant issues. Call out parity fingerprint changes explicitly and justify them; include CLI output examples when user-facing behavior changes. Keep unrelated cleanup in separate commits.
